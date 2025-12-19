@@ -17,6 +17,10 @@
     "backend"
   ],
   "license": "ISC",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
     "bcryptjs": "^3.0.3",

@@ -2,7 +2,7 @@ services:
   - type: web
     name: lapremier-server
     env: node
-    buildCommand: npm install --legacy-peer-deps --prefer-offline
+    buildCommand: npm ci --legacy-peer-deps --no-audit --progress=false
     startCommand: npm start
     envVars:
       - key: NODE_ENV
@@ -10,4 +10,3 @@ services:
       - key: PORT
         value: 5005
     healthCheckPath: /health
-
