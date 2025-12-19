@@ -1,22 +1,22 @@
 # 🚀 Guía de Despliegue en Producción - 100% GRATIS
 
-> ✅ **Esta guía está optimizada para mantener tu aplicación 100% GRATIS usando los planes gratuitos de Railway, Vercel y MongoDB Atlas**
+> ✅ **Esta guía está optimizada para mantener tu aplicación 100% GRATIS usando los planes gratuitos de Render, Vercel y MongoDB Atlas**
 
 ## 📋 Stack Recomendado (100% Gratis)
 
 ### 🎯 Configuración Completa Gratuita
 
-- **Backend:** Railway (Plan Gratuito)
+- **Backend:** Render (Plan Gratuito)
 - **Frontend:** Vercel (Plan Gratuito)
 - **Base de Datos:** MongoDB Atlas (Plan M0 Gratuito - 512MB)
-- **Cron Jobs:** cron-job.org (Gratis) o deshabilitados
+- **Cron Jobs:** Render (incluido en plan gratis) o cron-job.org
 - **Total:** $0/mes - **SIN COSTOS**
 
 ## 📋 Opciones Recomendadas
 
 ### 🎯 Backend (LaPremier_Server)
 
-#### ⭐ Opción 1: Railway (Recomendado - 100% Gratis)
+#### ⭐ Opción 1: Render (Recomendado - 100% Gratis)
 
 **Ventajas:**
 
@@ -24,71 +24,75 @@
 - ✅ Variables de entorno fáciles
 - ✅ Auto-deploy desde GitHub
 - ✅ HTTPS automático
-- ✅ **Plan gratuito permanente** (500 horas/mes)
-- ✅ **$5 de crédito gratis** cada mes
+- ✅ **Plan gratuito permanente** (750 horas/mes)
+- ✅ **Cron jobs incluidos** (gratis)
+- ✅ Auto-sleep después de inactividad (ahorra recursos)
 
 **⚠️ IMPORTANTE - Plan Gratuito:**
 
-- ✅ 500 horas de ejecución/mes (suficiente para 24/7)
-- ✅ $5 de crédito gratis/mes
-- ✅ Si superas el crédito, el servicio se pausa (no cobra)
-- ✅ Puedes reactivar manualmente
+- ✅ 750 horas de ejecución/mes (suficiente para 24/7)
+- ✅ Auto-sleep después de 15 minutos de inactividad
+- ✅ Se despierta automáticamente con la primera petición
+- ✅ Cron jobs nativos incluidos (gratis)
 
 **Pasos:**
 
-1. Crear cuenta en [Railway.app](https://railway.app) (con GitHub)
-2. "New Project" → "Deploy from GitHub"
-3. Seleccionar repositorio y carpeta `LaPremier_Server`
-4. Railway detecta Node.js automáticamente (usa `railway.json`)
+1. Crear cuenta en [Render.com](https://render.com) (con GitHub)
+2. "New" → "Web Service"
+3. Conectar GitHub y seleccionar repositorio
+4. Configurar:
+   - **Name:** `lapremier-server`
+   - **Root Directory:** `LaPremier_Server` (si el repo tiene ambas carpetas)
+   - **Environment:** `Node`
+   - **Build Command:** `npm install` (automático)
+   - **Start Command:** `npm start` (automático)
 5. Añadir variables de entorno (ver abajo)
-6. ¡Listo! Obtienes URL: `https://tu-proyecto.up.railway.app`
+6. Deploy → ¡Listo! Obtienes URL: `https://tu-proyecto.onrender.com`
 
-**Variables de entorno en Railway (100% Gratis):**
+**Variables de entorno en Render (100% Gratis):**
 
 ```env
 NODE_ENV=production
+PORT=5005
 MONGODB_URI=mongodb+srv://... (MongoDB Atlas M0 - GRATIS)
 JWT_SECRET=tu-secret-super-seguro
 CORS_ORIGIN=https://tu-frontend.vercel.app
 TMDB_API_KEY=tu-key
 GEMINI_API_KEY=tu-key
 GOOGLE_PLACES_API_KEY=tu-key
-ENABLE_CRON=false
-# Nota: Railway free tier no soporta cron nativo
-# Usar cron-job.org gratis para llamar a la API
+FOURSQUARE_API_KEY=tu-key
+ENABLE_CRON=true
+# Render free tier SÍ soporta cron jobs nativos
 ```
 
-**💰 Precio:** **GRATIS** (500 horas/mes + $5 crédito/mes)
+**💰 Precio:** **GRATIS** (750 horas/mes)
+
+**📝 Nota sobre Auto-Sleep:**
+
+- El servicio se duerme después de 15 minutos de inactividad
+- Se despierta automáticamente con la primera petición (30-60 segundos)
+- Para evitar sleep: usar [Uptime Robot](https://uptimerobot.com) (gratis) para ping cada 5 minutos
 
 **📝 Nota sobre Cron Jobs:**
 
-- Railway free tier no soporta cron jobs nativos
-- Solución: Usar [cron-job.org](https://cron-job.org) (gratis)
-- Configurar para llamar a `/api/scraping/cinemas/all` los viernes
+- ✅ Render free tier **SÍ soporta cron jobs nativos**
+- ✅ Puedes usar `ENABLE_CRON=true` y el cron job de Node.js funcionará
+- ✅ O configurar cron job en Render Dashboard
 
 ---
 
-#### 🥈 Opción 2: Render
+#### 🥈 Opción 2: Railway
 
 **Ventajas:**
 
-- ✅ Plan gratuito permanente
+- ✅ Plan gratuito (500 horas/mes + $5 crédito)
 - ✅ Auto-deploy desde GitHub
 - ✅ HTTPS automático
-- ✅ MongoDB disponible
+- ✅ No tiene auto-sleep
 
-**Pasos:**
+**Precio:** Gratis hasta cierto uso, luego ~$5/mes
 
-1. Crear cuenta en [Render.com](https://render.com)
-2. "New" → "Web Service"
-3. Conectar GitHub y seleccionar `LaPremier_Server`
-4. Configurar:
-   - Build Command: `npm install`
-   - Start Command: `npm start`
-5. Añadir variables de entorno
-6. Deploy
-
-**Precio:** Gratis (con limitaciones), $7/mes para plan sin limitaciones
+**Nota:** Railway free tier no soporta cron jobs nativos, usar cron-job.org
 
 ---
 
@@ -257,12 +261,13 @@ Si usas Railway para el backend, puedes usar su MongoDB incluido.
 
 ### ✅ Configuración Optimizada para Gratis
 
-**Backend: Railway (Plan Gratuito)**
+**Backend: Render (Plan Gratuito)**
 
-- ✅ 500 horas/mes de ejecución (suficiente para 24/7)
-- ✅ $5 crédito gratis/mes
-- ✅ Auto-pausa si superas crédito (no cobra)
-- ✅ Configurado con `railway.json`
+- ✅ 750 horas/mes de ejecución (suficiente para 24/7)
+- ✅ Auto-sleep después de 15 min inactividad (ahorra recursos)
+- ✅ Se despierta automáticamente
+- ✅ Cron jobs nativos incluidos (gratis)
+- ✅ Configurado con `render.yaml`
 
 **Frontend: Vercel (Plan Gratuito)**
 
@@ -277,10 +282,11 @@ Si usas Railway para el backend, puedes usar su MongoDB incluido.
 - ✅ Backups automáticos
 - ✅ Suficiente para producción inicial
 
-**Cron Jobs: cron-job.org (Gratis)**
+**Cron Jobs: Render (Incluido)**
 
-- ✅ Llamadas ilimitadas
-- ✅ Configurar para actualizar carteleras los viernes
+- ✅ Cron jobs nativos incluidos en plan gratis
+- ✅ Configurar en Render Dashboard o usar `ENABLE_CRON=true`
+- ✅ Alternativa: cron-job.org (gratis) si prefieres externo
 
 **💰 Total:** **$0/mes - 100% GRATIS**
 
@@ -288,17 +294,18 @@ Si usas Railway para el backend, puedes usar su MongoDB incluido.
 
 | Servicio      | Límite Gratuito | ¿Suficiente?              |
 | ------------- | --------------- | ------------------------- |
-| Railway       | 500 horas/mes   | ✅ Sí (24/7)              |
+| Render        | 750 horas/mes   | ✅ Sí (24/7)              |
 | Vercel        | 100GB/mes       | ✅ Sí (miles de usuarios) |
 | MongoDB Atlas | 512MB           | ✅ Sí (10k+ cines)        |
-| cron-job.org  | Ilimitado       | ✅ Sí                     |
+| Render Cron   | Incluido        | ✅ Sí                     |
 
 ### ⚠️ Importante - Mantener Gratis
 
-1. **Railway:** Si superas $5/mes, el servicio se pausa (no cobra)
+1. **Render:** 750 horas/mes es suficiente para 24/7 (gratis)
 2. **Vercel:** Si superas 100GB, necesitarás plan Pro ($20/mes)
 3. **MongoDB:** Si superas 512MB, necesitarás plan M2 ($9/mes)
 4. **Gemini:** Ya configurado para nunca exceder cuota gratuita (18/20 requests/día)
+5. **Auto-sleep:** Render se duerme después de 15 min inactividad (normal, se despierta automáticamente)
 
 ---
 
@@ -328,18 +335,26 @@ Si usas Railway para el backend, puedes usar su MongoDB incluido.
 
 ## 🔧 Configuración Detallada
 
-### Railway (Backend)
+### Render (Backend)
 
-1. **Crear proyecto:**
+1. **Crear servicio:**
 
-   - Railway.app → New Project → Deploy from GitHub
-   - Seleccionar `LaPremier_Server`
+   - Render.com → New → Web Service
+   - Conectar GitHub y seleccionar repositorio
+   - Root Directory: `LaPremier_Server` (si aplica)
 
-2. **Variables de entorno:**
+2. **Configuración:**
+
+   - Name: `lapremier-server`
+   - Environment: `Node`
+   - Build Command: `npm install` (automático)
+   - Start Command: `npm start` (automático)
+
+3. **Variables de entorno:**
 
    ```
-   PORT=5005
    NODE_ENV=production
+   PORT=5005
    MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/lapremier
    JWT_SECRET=genera-un-secret-super-largo-y-seguro-aqui
    JWT_EXPIRES_IN=7d
@@ -347,18 +362,19 @@ Si usas Railway para el backend, puedes usar su MongoDB incluido.
    TMDB_API_KEY=tu-key
    GEMINI_API_KEY=tu-key
    GOOGLE_PLACES_API_KEY=tu-key
+   FOURSQUARE_API_KEY=tu-key
    ENABLE_CRON=true
    ```
 
-3. **Deploy automático:**
+4. **Deploy automático:**
 
-   - Railway detecta `package.json`
+   - Render detecta `package.json`
    - Instala dependencias automáticamente
    - Ejecuta `npm start`
 
-4. **Obtener URL:**
-   - Railway te da: `https://tu-proyecto.up.railway.app`
-   - Puedes usar dominio personalizado
+5. **Obtener URL:**
+   - Render te da: `https://tu-proyecto.onrender.com`
+   - Puedes usar dominio personalizado (gratis)
 
 ---
 
@@ -462,23 +478,28 @@ openssl rand -hex 64
 3. Network Access → Add IP Address → `0.0.0.0/0`
 4. Database Access → Add User → crear usuario y password
 5. Connect → Connect your application → copiar connection string
-6. Reemplazar `<password>` con tu password → guardar para Railway
+6. Reemplazar `<password>` con tu password → guardar para Render
 
 **Resultado:** `MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/lapremier`
 
 ---
 
-### 2. Backend en Railway - 5 minutos
+### 2. Backend en Render - 5 minutos
 
-1. Crear cuenta en [Railway.app](https://railway.app) (con GitHub - gratis)
-2. "New Project" → "Deploy from GitHub"
-3. Seleccionar tu repositorio
-4. Seleccionar carpeta `LaPremier_Server`
-5. Railway detecta Node.js automáticamente (usa `railway.json`)
-6. Variables → Add Variable → añadir todas las variables de entorno:
+1. Crear cuenta en [Render.com](https://render.com) (con GitHub - gratis)
+2. "New" → "Web Service"
+3. Conectar GitHub y seleccionar tu repositorio
+4. Configurar servicio:
+   - **Name:** `lapremier-server`
+   - **Root Directory:** `LaPremier_Server` (si el repo tiene ambas carpetas)
+   - **Environment:** `Node`
+   - **Build Command:** `npm install` (automático)
+   - **Start Command:** `npm start` (automático)
+5. Environment → Add Environment Variable → añadir todas las variables:
 
 ```env
 NODE_ENV=production
+PORT=5005
 MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/lapremier
 JWT_SECRET=genera-con: node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 JWT_EXPIRES_IN=7d
@@ -486,13 +507,16 @@ CORS_ORIGIN=https://tu-frontend.vercel.app
 TMDB_API_KEY=tu-api-key
 GEMINI_API_KEY=tu-api-key
 GOOGLE_PLACES_API_KEY=tu-api-key
-ENABLE_CRON=false
+FOURSQUARE_API_KEY=tu-api-key
+ENABLE_CRON=true
 ```
 
-7. Deploy automático → esperar a que termine
-8. Settings → Generate Domain → copiar URL (ej: `https://tu-proyecto.up.railway.app`)
+6. Create Web Service → esperar a que termine el deploy
+7. Obtener URL automática (ej: `https://tu-proyecto.onrender.com`)
 
-**Resultado:** Backend funcionando en `https://tu-proyecto.up.railway.app`
+**Resultado:** Backend funcionando en `https://tu-proyecto.onrender.com`
+
+**⚠️ Nota:** El servicio puede tardar 30-60 segundos en despertar si está dormido (normal en plan gratis)
 
 ---
 
@@ -522,7 +546,7 @@ VITE_GOOGLE_MAPS_API_KEY=tu-api-key
 
 ### 4. Configurar CORS en Backend
 
-Volver a Railway → Variables → actualizar:
+Volver a Render → Environment → actualizar:
 
 ```env
 CORS_ORIGIN=https://tu-proyecto.vercel.app
@@ -532,30 +556,45 @@ Redeploy automático.
 
 ---
 
-### 5. Cron Jobs (Opcional - Gratis)
+### 5. Cron Jobs (Opcional - Ya Incluido)
 
-Railway free tier no soporta cron nativos. Usar [cron-job.org](https://cron-job.org) (gratis):
+Render free tier **SÍ soporta cron jobs nativos**. Dos opciones:
 
-1. Crear cuenta en cron-job.org (gratis)
-2. Create Cronjob
-3. URL: `https://tu-proyecto.up.railway.app/api/scraping/cinemas/all`
-4. Method: POST
-5. Headers: `Authorization: Bearer tu-jwt-token`
-6. Schedule: Todos los viernes a las 9:00 AM
-7. Guardar
+**Opción A: Usar cron job de Node.js (Recomendado)**
+
+- Ya configurado con `ENABLE_CRON=true`
+- Se ejecuta automáticamente los viernes a las 9:00 AM
+- Funciona mientras el servicio esté despierto
+
+**Opción B: Configurar en Render Dashboard**
+
+1. Render Dashboard → Cron Jobs → New Cron Job
+2. Configurar:
+   - Schedule: `0 9 * * 5` (Viernes a las 9:00 AM)
+   - Command: `curl -X POST https://tu-proyecto.onrender.com/api/scraping/cinemas/all -H "Authorization: Bearer tu-jwt-token"`
+3. Guardar
 
 **Resultado:** Actualización automática de carteleras cada viernes
+
+**💡 Tip:** Para mantener el servicio despierto y que el cron funcione mejor, usar [Uptime Robot](https://uptimerobot.com) (gratis) para ping cada 5 minutos a `/health`
 
 ---
 
 ## ✅ Verificación Final
 
-1. ✅ Backend: `https://tu-proyecto.up.railway.app/health` → debe responder OK
+1. ✅ Backend: `https://tu-proyecto.onrender.com/health` → debe responder OK
+   - ⚠️ Primera petición puede tardar 30-60 segundos (servicio despertando)
 2. ✅ Frontend: `https://tu-proyecto.vercel.app` → debe cargar
 3. ✅ Conexión: Frontend debe poder llamar al backend
 4. ✅ Base de datos: Verificar en MongoDB Atlas que se crean colecciones
 
 **💰 Total:** **$0/mes - 100% GRATIS**
+
+**📝 Nota sobre Auto-Sleep:**
+
+- El servicio puede tardar 30-60 segundos en responder la primera vez después de dormir
+- Esto es normal en el plan gratuito de Render
+- Para evitar sleep: usar [Uptime Robot](https://uptimerobot.com) (gratis) para ping cada 5 minutos
 
 ---
 
@@ -609,8 +648,9 @@ Railway free tier no soporta cron nativos. Usar [cron-job.org](https://cron-job.
 ### Backend no inicia
 
 - Verificar `MONGODB_URI`
-- Verificar `PORT` (Railway asigna automáticamente)
-- Revisar logs en Railway
+- Verificar `PORT=5005` (o dejar que Render asigne automáticamente)
+- Revisar logs en Render Dashboard
+- Verificar que el build haya terminado correctamente
 
 ### Frontend no conecta al backend
 
@@ -630,9 +670,10 @@ Railway free tier no soporta cron nativos. Usar [cron-job.org](https://cron-job.
 
 Para problemas de despliegue:
 
-- 📖 Documentación de Railway: https://docs.railway.app
+- 📖 Documentación de Render: https://render.com/docs
 - 📖 Documentación de Vercel: https://vercel.com/docs
 - 📖 Documentación de MongoDB Atlas: https://docs.atlas.mongodb.com
+- 📖 Guía específica Render: Ver [RENDER_SETUP.md](./RENDER_SETUP.md)
 
 ---
 

@@ -490,13 +490,14 @@ LaPremier_Server/
 
 ### 🎯 Opciones Recomendadas
 
-#### ⭐ Backend: Railway (Recomendado - Más Fácil)
+#### ⭐ Backend: Render (Recomendado - 100% Gratis)
 
 - ✅ Setup en minutos
 - ✅ Auto-deploy desde GitHub
 - ✅ HTTPS automático
-- ✅ Plan gratuito generoso
-- 💰 Gratis hasta cierto uso, luego ~$5/mes
+- ✅ Plan gratuito permanente (750 horas/mes)
+- ✅ Cron jobs incluidos (gratis)
+- 💰 Gratis (750 horas/mes)
 
 #### 🥈 Backend: Render
 
@@ -530,9 +531,10 @@ LaPremier_Server/
 
 ### 🚀 Stack Recomendado (100% Gratis)
 
-- **Backend:** Railway (gratis)
-- **Frontend:** Vercel (gratis)
+- **Backend:** Render (gratis - 750 horas/mes)
+- **Frontend:** Vercel (gratis - 100GB/mes)
 - **Base de Datos:** MongoDB Atlas (gratis - 512MB)
+- **Cron Jobs:** Render (incluido) o cron-job.org (gratis)
 - **Total:** $0/mes
 
 ### ✅ Checklist Pre-Producción
