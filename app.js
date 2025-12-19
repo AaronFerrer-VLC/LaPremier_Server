@@ -15,6 +15,7 @@ const moviesRoutes = require('./routes/movies');
 const reviewsRoutes = require('./routes/reviews');
 const favoritesRoutes = require('./routes/favorites');
 const externalAPIRoutes = require('./routes/externalAPI');
+const cinemaScrapingRoutes = require('./routes/cinemaScraping');
 
 // Crear aplicación Express
 const app = express();
@@ -64,9 +65,23 @@ app.use('/movies', moviesRoutes);
 app.use('/reviews', reviewsRoutes);
 app.use('/favorites', favoritesRoutes);
 app.use('/api/external', externalAPILimiter, externalAPIRoutes);
+app.use('/api/scraping', cinemaScrapingRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);
+
+// Setup cron job for weekly cinema updates (only in production or if enabled)
+// Note: Railway free tier doesn't support cron jobs, use external service like cron-job.org
+if (ENV.IS_PRODUCTION && process.env.ENABLE_CRON === 'true' && process.env.RAILWAY_ENVIRONMENT === undefined) {
+  try {
+    const scheduleCinemaUpdates = require('./scripts/setupCronJob');
+    scheduleCinemaUpdates();
+    console.log('⏰ Cron job enabled: Cinema updates scheduled for Fridays at 9:00 AM');
+  } catch (error) {
+    console.warn('⚠️  Cron job setup failed (may not be supported on this platform):', error.message);
+    console.log('💡 Tip: Use external cron service like cron-job.org for Railway free tier');
+  }
+}
 
 // Start server
 const PORT = ENV.PORT;
@@ -75,6 +90,11 @@ app.listen(PORT, () => {
   console.log(`📊 Environment: ${ENV.NODE_ENV}`);
   console.log(`🌐 CORS Origin: ${ENV.CORS_ORIGIN}`);
   console.log(`💾 Database: MongoDB (${ENV.MONGODB_URI})`);
+  if (ENV.GEMINI_API_KEY) {
+    console.log('🤖 Gemini API: Configured');
+  } else {
+    console.log('⚠️  Gemini API: Not configured');
+  }
 });
 
 module.exports = app;

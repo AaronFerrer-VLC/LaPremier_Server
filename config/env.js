@@ -30,6 +30,7 @@ const ENV = {
   GOOGLE_PLACES_API_KEY: process.env.GOOGLE_PLACES_API_KEY,
   FOURSQUARE_API_KEY: process.env.FOURSQUARE_API_KEY,
   TMDB_API_KEY: process.env.TMDB_API_KEY,
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY,
   JWT_SECRET: process.env.JWT_SECRET || (process.env.NODE_ENV === 'production' ? null : 'dev-secret-change-in-production'),
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '7d',
   IS_DEVELOPMENT: process.env.NODE_ENV === 'development',

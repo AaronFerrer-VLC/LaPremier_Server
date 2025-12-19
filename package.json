@@ -18,8 +18,10 @@
   ],
   "license": "ISC",
   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
     "bcryptjs": "^3.0.3",
     "body-parser": "^2.2.1",
+    "cheerio": "^1.0.0",
     "dotenv": "^16.1.4",
     "express": "^5.2.1",
     "express-rate-limit": "^8.2.1",
@@ -29,8 +31,10 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^8.20.3",
     "morgan": "^1.10.0",
+    "node-cron": "^3.0.3",
     "node-fetch": "^2.7.0",
-    "prop-types": "^15.8.1"
+    "prop-types": "^15.8.1",
+    "puppeteer": "^21.5.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

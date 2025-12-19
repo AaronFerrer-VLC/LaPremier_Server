@@ -20,7 +20,9 @@ const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const proxyTMDBRequest = async (endpoint, params = {}) => {
   try {
     if (!TMDB_API_KEY) {
-      throw new Error('TMDB API key not configured');
+      const error = new Error('TMDB API key not configured');
+      error.statusCode = 500;
+      throw error;
     }
 
     // Build URL with API key
@@ -43,14 +45,32 @@ const proxyTMDBRequest = async (endpoint, params = {}) => {
     });
 
     const response = await fetch(url.toString());
-    const data = await response.json();
+    
+    // Try to parse JSON response
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      // If JSON parsing fails, create a generic error
+      const error = new Error(`TMDB API error: ${response.statusText || 'Invalid response'}`);
+      error.statusCode = response.status || 500;
+      throw error;
+    }
 
     if (!response.ok) {
-      throw new Error(`TMDB API error: ${data.status_message || response.statusText}`);
+      // Preserve the status code from TMDB
+      const error = new Error(data.status_message || response.statusText || 'TMDB API error');
+      error.statusCode = response.status;
+      error.tmdbData = data;
+      throw error;
     }
 
     return data;
   } catch (error) {
+    // If error already has statusCode, preserve it
+    if (!error.statusCode && error.status) {
+      error.statusCode = error.status;
+    }
     throw error;
   }
 };
@@ -175,9 +195,22 @@ exports.getMovieDetails = async (req, res) => {
     const data = await proxyTMDBRequest(`/movie/${id}`, { append_to_response });
     res.json({ success: true, data });
   } catch (error) {
-    res.status(500).json({
+    // Use the status code from TMDB if available, otherwise default to 500
+    const statusCode = error.statusCode || 500;
+    
+    // Log error for debugging
+    console.error(`[TMDB] Error fetching movie ${req.params.id}:`, {
+      statusCode,
+      message: error.message,
+      endpoint: `/movie/${req.params.id}`
+    });
+    
+    res.status(statusCode).json({
       success: false,
-      error: { message: error.message }
+      error: { 
+        message: error.message || 'Internal server error',
+        statusCode
+      }
     });
   }
 };
