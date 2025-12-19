@@ -43,12 +43,20 @@ Copiar el resultado y usarlo como `JWT_SECRET`.
 ### 3. Configuración Automática
 
 Render detecta automáticamente:
+
 - ✅ Node.js (por `package.json`)
-- ✅ Build command: `npm install`
+- ✅ Build command: `npm install --legacy-peer-deps --prefer-offline`
 - ✅ Start command: `npm start` (definido en `package.json`)
 - ✅ Puerto (asignado automáticamente o usar PORT=5005)
 
 El archivo `render.yaml` optimiza la configuración.
+
+**⚠️ Nota sobre Puppeteer:**
+
+- Puppeteer descarga Chromium (~100-300MB) durante el build
+- **Esto puede tardar 5-10 minutos** - es normal, no canceles
+- El build puede parecer "atascado" pero está descargando Chromium
+- Si supera 15 minutos, cancela y verifica logs
 
 ### 4. Límites del Plan Gratuito
 
@@ -80,22 +88,26 @@ O usar el cron job nativo de Node.js si `ENABLE_CRON=true`.
 ## 🔧 Troubleshooting
 
 ### El servicio se duerme
+
 - ✅ Normal en plan gratuito después de 15 min de inactividad
 - ✅ Se despierta automáticamente con la primera petición
 - ✅ Puede tardar 30-60 segundos en despertar
 - ✅ Considerar plan de pago si necesitas 24/7 sin sleep
 
 ### Error de conexión a MongoDB
+
 - ✅ Verificar `MONGODB_URI` en variables de entorno
 - ✅ Verificar IP whitelist en MongoDB Atlas (debe ser `0.0.0.0/0`)
 - ✅ Verificar usuario y password
 
 ### CORS errors
+
 - ✅ Verificar `CORS_ORIGIN` apunta a tu frontend en Vercel
 - ✅ No usar `*` en producción
 - ✅ Incluir protocolo `https://`
 
 ### Build falla
+
 - ✅ Verificar que todas las dependencias estén en `package.json`
 - ✅ Verificar logs de build en Render
 - ✅ Render usa `npm install` automáticamente
@@ -115,12 +127,15 @@ O usar el cron job nativo de Node.js si `ENABLE_CRON=true`.
 ## ⚠️ Importante - Plan Gratuito
 
 ### Auto-Sleep
+
 - El servicio se duerme después de 15 minutos de inactividad
 - Se despierta automáticamente con la primera petición
 - Puede tardar 30-60 segundos en responder la primera vez
 
 ### Solución (Opcional - Gratis)
+
 Si quieres evitar el sleep, puedes usar un servicio de ping gratuito:
+
 - [Uptime Robot](https://uptimerobot.com) - Ping cada 5 minutos (gratis)
 - Configurar para hacer GET a `/health` cada 5 minutos
 
@@ -131,4 +146,3 @@ Si quieres evitar el sleep, puedes usar un servicio de ping gratuito:
 **Render hace el deploy automático desde GitHub** 🚀
 
 </div>
-
