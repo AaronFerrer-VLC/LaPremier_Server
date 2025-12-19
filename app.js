@@ -71,15 +71,15 @@ app.use('/api/scraping', cinemaScrapingRoutes);
 app.use(errorHandler);
 
 // Setup cron job for weekly cinema updates (only in production or if enabled)
-// Note: Railway free tier doesn't support cron jobs, use external service like cron-job.org
-if (ENV.IS_PRODUCTION && process.env.ENABLE_CRON === 'true' && process.env.RAILWAY_ENVIRONMENT === undefined) {
+// Note: Render free tier supports cron jobs natively
+if (ENV.IS_PRODUCTION && process.env.ENABLE_CRON === 'true') {
   try {
     const scheduleCinemaUpdates = require('./scripts/setupCronJob');
     scheduleCinemaUpdates();
     console.log('⏰ Cron job enabled: Cinema updates scheduled for Fridays at 9:00 AM');
   } catch (error) {
     console.warn('⚠️  Cron job setup failed (may not be supported on this platform):', error.message);
-    console.log('💡 Tip: Use external cron service like cron-job.org for Railway free tier');
+    console.log('💡 Tip: Render free tier supports cron jobs, or use external service like cron-job.org');
   }
 }
 
