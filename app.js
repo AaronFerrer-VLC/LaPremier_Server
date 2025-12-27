@@ -85,7 +85,7 @@ if (ENV.IS_PRODUCTION && process.env.ENABLE_CRON === 'true') {
 
 // Start server
 const PORT = ENV.PORT;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server is running at port ${PORT}`);
   console.log(`📊 Environment: ${ENV.NODE_ENV}`);
   console.log(`🌐 CORS Origin: ${ENV.CORS_ORIGIN}`);
