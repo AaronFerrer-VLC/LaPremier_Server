@@ -1,0 +1,37 @@
+# fly.toml - Configuración para Fly.io (Plan Gratuito)
+# La app se apagará automáticamente cuando no haya tráfico
+# Se despertará automáticamente con la primera petición
+
+app = "lapremier-server"
+primary_region = "mad"  # Madrid - Cambia según tu región preferida (iad, syd, hkg, etc.)
+
+[build]
+  builder = "dockerfile"
+  dockerfile = "Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  PORT = "8080"  # Fly.io usará este puerto internamente
+
+# Configuración para plan gratuito (mínimos recursos)
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    timeout = "5s"
+    path = "/health"
+
+# Máquina compartida (gratis) - se apaga cuando no hay tráfico
+[[vm]]
+  memory_mb = 256
+  cpu_kind = "shared"
+  cpus = 1
+

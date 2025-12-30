@@ -17,7 +17,7 @@ class ScrapingService {
    */
   async initBrowser() {
     if (!this.browser) {
-      this.browser = await puppeteer.launch({
+      const launchOptions = {
         headless: 'new', // Use new headless mode to avoid deprecation warning
         args: [
           '--no-sandbox',
@@ -26,7 +26,14 @@ class ScrapingService {
           '--disable-accelerated-2d-canvas',
           '--disable-gpu'
         ]
-      });
+      };
+
+      // Usar Chromium del sistema si está configurado (Fly.io, Docker, etc.)
+      if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+        launchOptions.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
+      }
+
+      this.browser = await puppeteer.launch(launchOptions);
     }
     return this.browser;
   }
